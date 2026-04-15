@@ -32,6 +32,10 @@ export class RoutesComponent {
       this.dataService.getManagers().subscribe(data => this.previewData = data);
     } else if (method === '/teams') {
       this.dataService.getTeams().subscribe(data => this.previewData = data);
+    } else if (method === '/results') {
+      this.dataService.getResults().subscribe(data => this.previewData = data);
+    } else if (method === '/fixtures') {
+      this.dataService.getResults().subscribe(data => this.previewData = data);
     }
   }
 }

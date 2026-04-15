@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/fixtures', (req, res) => {
-  connection.query('SELECT * FROM fixtures WHERE round > 5 ORDER BY division, round, hteam', (err, rows, fields) => {
+  connection.query('SELECT * FROM fixtures WHERE round > 5 ORDER BY division ASC, round ASC, hteam', (err, rows, fields) => {
     if (err) {
         console.error(err);
         return res.status(500).send('Database error');
@@ -38,7 +38,7 @@ app.get('/fixtures', (req, res) => {
 })
 
 app.get('/results', (req, res) => {
-  connection.query('SELECT * FROM fixtures WHERE round < 6 ORDER BY division, round, hteam', (err, rows, fields) => {
+  connection.query('SELECT * FROM fixtures WHERE round < 6 ORDER BY division ASC, round ASC, hteam', (err, rows, fields) => {
     if (err) {
         console.error(err);
         return res.status(500).send('Database error');

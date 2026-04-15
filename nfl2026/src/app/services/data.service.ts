@@ -19,4 +19,12 @@ export class DataService {
   getTeams(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/teams`);
   }
+
+  getResults(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/results`);
+  }
+
+  getFixtures(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/fixtures`);
+  }
 }
