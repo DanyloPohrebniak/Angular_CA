@@ -1,0 +1,20 @@
+<div class="container mt-4">
+  <h2>Team Rankings</h2>
+  <table class="table table-hover table-bordered">
+    <thead class="table-primary">
+      <tr>
+        <th>Team Name</th>
+        <th>Rank</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let team of teams">
+        <td>
+          <span class="dot" [style.background-color]="'rgb(' + team.rgb + ')'"></span>
+          <strong>{{ team.name }}</strong>
+        </td>
+        <td>{{ team.powerrank}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

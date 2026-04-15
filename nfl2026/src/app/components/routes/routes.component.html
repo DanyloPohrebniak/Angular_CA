@@ -1,0 +1,33 @@
+<div class="container mt-5">
+  <h2>Routes</h2>
+  <table class="table table-hover table-bordered shadow-sm align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>/routes</th>
+        <th>Description</th>
+        <th>URL</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let route of navigationRoutes">
+        <td class="fw-bold text-primary">{{ route.name }}</td>
+        <td>{{ route.description }}</td>
+        <td><a [href]="route.apiUrl" target="_blank" class="text-primary text-decoration-none">{{ route.apiUrl }}</a></td>
+        <td>
+          <div class="btn-group">
+            <button (click)="fetchDataPreview(route.name)" class="btn btn-primary btn-sm">GET</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="mt-4">
+    <h5 class="text-muted">JSON:</h5>
+    <div class="jumbotron p-4 bg-light border rounded-3 shadow-inner" style="min-height: 150px; max-height: 400px; overflow-y: auto;">
+      <pre *ngIf="previewData">{{ previewData | json }}</pre>
+      <p *ngIf="!previewData" class="text-center text-secondary mt-4 italic">Click "GET" to fetch and display data here...</p>
+    </div>    
+  </div>
+</div>

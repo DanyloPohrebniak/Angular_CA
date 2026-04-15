@@ -81,6 +81,20 @@ app.get('/teams', (req, res) => {
   })
 })
 
+// Team rank update
+app.post('/teams/update-rank', express.json(), (req, res) => {
+    const { id, rank } = req.body;
+    const query = 'UPDATE teams SET rank = ? WHERE id = ?';
+    
+    connection.query(query, [rank, id], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Error updating rank');
+        }
+        res.json({ message: 'Rank updated successfully' });
+    });
+});
+
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000')
