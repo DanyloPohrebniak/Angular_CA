@@ -28,7 +28,19 @@ app.get('/', (req, res) => {
 })
 
 app.get('/fixtures', (req, res) => {
-  connection.query('SELECT * FROM fixtures WHERE round > 5 ORDER BY division ASC, round ASC, hteam', (err, rows, fields) => {
+  const query = `
+    SELECT 
+      f.*,
+      ht.rgb as hrgb,
+      at.rgb as argb
+    FROM fixtures f
+    LEFT JOIN teams ht ON f.hteam = ht.name
+    LEFT JOIN teams at ON f.ateam = at.name
+    WHERE f.round > 5 
+    ORDER BY f.division ASC, f.round ASC, f.hteam
+  `;
+  
+  connection.query(query, (err, rows, fields) => {
     if (err) {
         console.error(err);
         return res.status(500).send('Database error');
@@ -39,7 +51,19 @@ app.get('/fixtures', (req, res) => {
 })
 
 app.get('/results', (req, res) => {
-  connection.query('SELECT * FROM fixtures WHERE round < 6 ORDER BY division ASC, round ASC, hteam', (err, rows, fields) => {
+  const query = `
+    SELECT 
+      f.*,
+      ht.rgb as hrgb,
+      at.rgb as argb
+    FROM fixtures f
+    LEFT JOIN teams ht ON f.hteam = ht.name
+    LEFT JOIN teams at ON f.ateam = at.name
+    WHERE f.round < 6 
+    ORDER BY f.division ASC, f.round ASC, f.hteam
+  `;
+  
+  connection.query(query, (err, rows, fields) => {
     if (err) {
         console.error(err);
         return res.status(500).send('Database error');
@@ -102,6 +126,52 @@ app.post('/teams/vote', (req, res) => {
     connection.query(query, [id], (err, results) => {
         if (err) return res.status(500).send(err);
         res.json({ success: true });
+    });
+});
+
+// Update match results
+app.put('/results/:id', (req, res) => {
+    const { id } = req.params;
+    const { hteam, ateam, hgls, h2pts, h1pts, agls, a2pts, a1pts, hteamtotal, ateamtotal } = req.body;
+    
+    if (!id) {
+        return res.status(400).json({ error: 'Match ID is required' });
+    }
+
+    const hTotal = hteamtotal || ((hgls || 0) * 3) + ((h2pts || 0) * 2) + (h1pts || 0);
+    const aTotal = ateamtotal || ((agls || 0) * 3) + ((a2pts || 0) * 2) + (a1pts || 0);
+    
+    const hScore = `${hgls || 0}-${h2pts || 0}-${h1pts || 0}`;
+    const aScore = `${agls || 0}-${a2pts || 0}-${a1pts || 0}`;
+
+    const query = `
+        UPDATE fixtures 
+        SET hteam = ?, 
+            ateam = ?, 
+            hgls = ?, 
+            h2pts = ?, 
+            h1pts = ?, 
+            agls = ?, 
+            a2pts = ?, 
+            a1pts = ?,
+            hteamscore = ?,
+            ateamscore = ?,
+            hteamtotal = ?,
+            ateamtotal = ?
+        WHERE id = ?
+    `;
+    
+    connection.query(query, [hteam, ateam, hgls, h2pts, h1pts, agls, a2pts, a1pts, hScore, aScore, hTotal, aTotal, id], (err, results) => {
+        if (err) {
+            console.error('Update error:', err);
+            return res.status(500).json({ error: 'Database update failed', details: err.message });
+        }
+        
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ error: 'Match not found' });
+        }
+        
+        res.json({ success: true, message: 'Match updated successfully' });
     });
 });
 
