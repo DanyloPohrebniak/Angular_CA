@@ -5,6 +5,7 @@ import cors from 'cors'
 const app = express()
 
 app.use(cors())
+app.use(express.json());
 
 let connection = mysql.createConnection({
   host: 'localhost',
@@ -81,17 +82,26 @@ app.get('/teams', (req, res) => {
   })
 })
 
+// get 2 random teams from db
+app.get('/teams/random', (req, res) => {
+    const query = "SELECT id, name FROM teams ORDER BY RAND() LIMIT 2";
+    connection.query(query, (err, results) => {
+        if (err) return res.status(500).send(err);
+        res.json(results);
+    });
+});
+
 // Team rank update
-app.post('/teams/update-rank', express.json(), (req, res) => {
-    const { id, rank } = req.body;
-    const query = 'UPDATE teams SET rank = ? WHERE id = ?';
+app.post('/teams/vote', (req, res) => {
+    const { id } = req.body;
     
-    connection.query(query, [rank, id], (err, result) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).send('Error updating rank');
-        }
-        res.json({ message: 'Rank updated successfully' });
+    if (!id) {
+        return res.status(400).json({ error: 'Team ID is required' });
+    }
+    const query = "UPDATE teams SET powerrank = powerrank + 1 WHERE id = ?";
+    connection.query(query, [id], (err, results) => {
+        if (err) return res.status(500).send(err);
+        res.json({ success: true });
     });
 });
 

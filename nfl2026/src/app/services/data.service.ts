@@ -20,6 +20,14 @@ export class DataService {
     return this.http.get<any[]>(`${this.apiUrl}/teams`);
   }
 
+  getRandomTeams(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/teams/random`);
+  }
+
+  voteForTeam(id: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/teams/vote`, { id });
+  }
+
   getResults(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/results`);
   }
