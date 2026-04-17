@@ -18,14 +18,25 @@ interface TeamStats {
 })
 export class ChartComponent implements OnInit {
   filteredResults: TeamStats[] = [];
+  teams: any[] = []; 
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataService.getResults().subscribe(matches => {
-      this.filteredResults = this.calculateForAgainst(matches);
-      setTimeout(() => this.createChart(), 100);
+    this.dataService.getTeams().subscribe(teams => {
+      this.teams = teams;
+      
+      this.dataService.getResults().subscribe(matches => {
+        this.filteredResults = this.calculateForAgainst(matches);
+        setTimeout(() => this.createChart(), 100);
+      });
     });
+  }
+
+
+  getTeamRgb(teamName: string): string {
+    const team = this.teams.find(t => t.name === teamName);
+    return team ? team.rgb : '200,200,200';
   }
 
   calculateForAgainst(matches: any[]): TeamStats[] {

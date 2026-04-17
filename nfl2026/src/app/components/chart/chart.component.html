@@ -14,7 +14,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let match of filteredResults">
-            <td class="text-center">{{ match.name }}</td>
+            <td class="text-center">
+              <span class="dot" [style.background-color]="'rgb(' + getTeamRgb(match.name) + ')'"></span>
+              {{ match.name }}
+            </td>
             <td class="text-center">{{ match.for }}</td>
             <td class="text-center">{{ match.against }}</td>
         </tr>

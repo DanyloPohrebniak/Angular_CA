@@ -43,7 +43,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let round of teamStats">
-            <td class="text-center">{{ round.team }}</td>
+            <td class="text-center">
+              <span class="dot" [style.background-color]="'rgb(' + getTeamRgb(round.team) + ')'"></span>
+              {{ round.team }}
+            </td>
             <td class="text-center">{{ round.r1 }}</td>
             <td class="text-center">{{ round.r2 }}</td>
             <td class="text-center">{{ round.r3 }}</td>

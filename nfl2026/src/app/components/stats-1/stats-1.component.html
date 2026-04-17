@@ -39,7 +39,10 @@
       <tbody>
         <tr *ngFor="let match of filteredResults">
             <td class="text-center">{{ match.division }}</td>
-            <td class="text-center">{{ match.name }}</td>
+            <td class="text-center">
+              <span class="dot" [style.background-color]="'rgb(' + getTeamRgb(match.name) + ')'"></span>
+              {{ match.name }}
+            </td>
             <td class="text-center">{{ match.matches }}</td>
             <td class="text-center">{{ match.total }}</td>
             <td class="text-center">{{ match.goals }}</td>

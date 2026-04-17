@@ -12,14 +12,24 @@ import { DataService } from '../../services/data.service';
 export class Stats2Component implements OnInit {
   divisionStats: any[] = [];
   teamStats: any[] = [];
+  teams: any[] = [];
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataService.getResults().subscribe(data => {
-      this.processDivisionStats(data);
-      this.processTeamStats(data);
+    this.dataService.getTeams().subscribe(teams => {
+      this.teams = teams;
+      
+      this.dataService.getResults().subscribe(data => {
+        this.processDivisionStats(data);
+        this.processTeamStats(data);
+      });
     });
+  }
+
+  getTeamRgb(teamName: string): string {
+    const team = this.teams.find(t => t.name === teamName);
+    return team ? team.rgb : '200,200,200';
   }
 
   // table 1
