@@ -39,4 +39,9 @@ export class DataService {
   getPlayers(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/players`);
   }
+
+  updateMatch(m: any): Observable<any> {
+    // Переконайся, що шлях збігається з Node.js (наприклад, '/results/:id' або '/matches/:id')
+    return this.http.put(`${this.apiUrl}/results/${m.id}`, m); 
+  }
 }

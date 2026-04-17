@@ -1,0 +1,51 @@
+<div class="container mt-4">
+  <h1 class="mb-4">Results Admin</h1>
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th style="width: 5%">Div</th>
+          <th style="width: 20%" class="text-end">Home Team</th>
+          <th style="width: 20%">Home Scores (G-2pt-1pt)</th>
+          <th style="width: 20%">Away Scores (G-2pt-1pt)</th>
+          <th style="width: 20%">Away Team</th>
+          <th style="width: 15%">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of matches">
+          <td class="fw-bold">{{ m.division }}</td>
+
+          <td>
+            <input [(ngModel)]="m.hteam" class="form-control form-control-sm text-end border-0 bg-transparent fw-bold" placeholder="Home Team">
+          </td>
+
+          <td>
+            <div class="input-group input-group-sm justify-content-end">
+              <input [(ngModel)]="m.hgls" type="number" class="form-control text-center mx-1" style="max-width: 45px;">
+              <input [(ngModel)]="m.h2pts" type="number" class="form-control text-center mx-1" style="max-width: 45px;">
+              <input [(ngModel)]="m.h1pts" type="number" class="form-control text-center mx-1" style="max-width: 45px;">
+            </div>
+          </td>
+
+          <td>
+            <div class="input-group input-group-sm">
+              <input [(ngModel)]="m.agls" type="number" class="form-control text-center mx-1" style="max-width: 45px;">
+              <input [(ngModel)]="m.a2pts" type="number" class="form-control text-center mx-1" style="max-width: 45px;">
+              <input [(ngModel)]="m.a1pts" type="number" class="form-control text-center mx-1" style="max-width: 45px;">
+            </div>
+          </td>
+
+          <td>
+            <input [(ngModel)]="m.ateam" class="form-control form-control-sm text-start border-0 bg-transparent fw-bold" placeholder="Away Team">
+          </td>
+
+          <td class="text-center">
+            <button (click)="saveChange(m)" class="btn btn-primary btn-sm px-3">Update</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
