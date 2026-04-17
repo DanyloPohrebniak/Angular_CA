@@ -1,0 +1,11 @@
+#chart-div {
+    overflow-x: auto;
+    white-space: nowrap;
+    background-color: #f8f9fa;
+    padding-bottom: 20px;
+}
+
+svg {
+    display: block;
+    margin: 0 auto;
+}

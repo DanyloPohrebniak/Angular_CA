@@ -1,1 +1,58 @@
-<p>stats-2 works!</p>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Scoring</h2>
+  </div>
+
+  <div>
+    <h2>Total per match</h2>
+    <table class="table table-hover table-bordered shadow-sm">
+      <thead class="table-dark">
+        <tr>
+          <th class="text-center">Division</th>
+          <th class="text-center">Round 1</th>
+          <th class="text-center">Round 2</th>
+          <th class="text-center">Round 3</th>
+          <th class="text-center">Round 4</th>
+          <th class="text-center">Round 5</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let match of divisionStats">
+            <td class="text-center">{{ match.division }}</td>
+            <td class="text-center">{{ match.r1 }}</td>
+            <td class="text-center">{{ match.r2 }}</td>
+            <td class="text-center">{{ match.r3 }}</td>
+            <td class="text-center">{{ match.r4 }}</td>
+            <td class="text-center">{{ match.r5 }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="divisionStats.length === 0" class="text-center mt-5">No results found</p>
+
+    <h2>Teams per round</h2>
+    <table class="table table-hover table-bordered shadow-sm">
+      <thead class="table-dark">
+        <tr>
+          <th class="text-center">Teams</th>
+          <th class="text-center">Round 1</th>
+          <th class="text-center">Round 2</th>
+          <th class="text-center">Round 3</th>
+          <th class="text-center">Round 4</th>
+          <th class="text-center">Round 5</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let round of teamStats">
+            <td class="text-center">{{ round.team }}</td>
+            <td class="text-center">{{ round.r1 }}</td>
+            <td class="text-center">{{ round.r2 }}</td>
+            <td class="text-center">{{ round.r3 }}</td>
+            <td class="text-center">{{ round.r4 }}</td>
+            <td class="text-center">{{ round.r5 }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p *ngIf="teamStats.length === 0" class="text-center mt-5">No results found </p>
+  
+</div>
