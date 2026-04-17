@@ -4,6 +4,8 @@ import { TeamsComponent } from './components/teams/teams.component';
 import { RoutesComponent } from './components/routes/routes.component';
 import { ResultsComponent } from './components/results/results.component';
 import { FixturesComponent } from './components/fixtures/fixtures.component';
+import { Stats1Component } from './components/stats-1/stats-1.component';
+import { Stats2Component } from './components/stats-2/stats-2.component';
 
 export const routes: Routes = [
   { path: '', component: RoutesComponent },
@@ -11,5 +13,7 @@ export const routes: Routes = [
   { path: 'teams', component: TeamsComponent },
   { path: 'results', component: ResultsComponent },
   { path: 'fixtures', component: FixturesComponent },
+  { path: 'scoring-stats-1', component: Stats1Component },
+  { path: 'scoring-stats-2', component: Stats2Component },
 ];
 

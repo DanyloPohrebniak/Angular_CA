@@ -27,4 +27,8 @@ export class DataService {
   getFixtures(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/fixtures`);
   }
+
+  getPlayers(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/players`);
+  }
 }

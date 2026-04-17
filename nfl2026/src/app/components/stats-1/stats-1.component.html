@@ -1,0 +1,54 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Score Stats(per match)</h2>
+    
+    <div class="col-md-3">
+      <select class="form-select" [(ngModel)]="selectedDivision" (change)="applyFilter()">
+        <option *ngFor="let div of divisions" [value]="div.value">{{ div.label }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div>
+    <table class="table table-hover table-bordered shadow-sm">
+      <thead class="table-dark">
+        <tr>
+          <th class="text-center" (click)="sortBy('division')" style="cursor: pointer;">
+            Division <span *ngIf="sortKey === 'division'">{{ reverse ? '▲' : '▼' }}</span>
+          </th>
+          <th class="text-center" (click)="sortBy('name')" style="cursor: pointer;">
+            Team <span *ngIf="sortKey === 'name'">{{ reverse ? '▲' : '▼' }}</span>
+          </th>
+          <th class="text-center" (click)="sortBy('matches')" style="cursor: pointer;">
+            Matches <span *ngIf="sortKey === 'matches'">{{ reverse ? '▲' : '▼' }}</span>
+          </th>
+          <th class="text-center" (click)="sortBy('total')" style="cursor: pointer;">
+            Total <span *ngIf="sortKey === 'total'">{{ reverse ? '▲' : '▼' }}</span>
+          </th>
+          <th class="text-center" (click)="sortBy('goals')" style="cursor: pointer;">
+            Goals <span *ngIf="sortKey === 'goals'">{{ reverse ? '▲' : '▼' }}</span>
+          </th>
+          <th class="text-center" (click)="sortBy('pts2')" style="cursor: pointer;">
+            2PTS <span *ngIf="sortKey === 'pts2'">{{ reverse ? '▲' : '▼' }}</span>
+          </th>
+          <th class="text-center" (click)="sortBy('pts1')" style="cursor: pointer;">
+            1PTS <span *ngIf="sortKey === 'pts1'">{{ reverse ? '▲' : '▼' }}</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let match of filteredResults">
+            <td class="text-center">{{ match.division }}</td>
+            <td class="text-center">{{ match.name }}</td>
+            <td class="text-center">{{ match.matches }}</td>
+            <td class="text-center">{{ match.total }}</td>
+            <td class="text-center">{{ match.goals }}</td>
+            <td class="text-center">{{ match.pts2 }}</td>
+            <td class="text-center">{{ match.pts1 }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <p *ngIf="filteredResults.length === 0" class="text-center mt-5">No results found for this division.</p>
+</div>
